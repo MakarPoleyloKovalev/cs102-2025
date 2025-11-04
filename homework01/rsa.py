@@ -26,7 +26,6 @@ def is_prime(n: int) -> bool:
         i += 2
 
     return True
-    pass
 
 
 def gcd(a: int, b: int) -> int:
@@ -37,20 +36,37 @@ def gcd(a: int, b: int) -> int:
     >>> gcd(3, 7)
     1
     """
-    # PUT YOUR CODE HERE
-    pass
+    while b != 0:
+        a, b = b, a % b
+    return a
 
 
 def multiplicative_inverse(e: int, phi: int) -> int:
     """
-    Euclid's extended algorithm for finding the multiplicative
-    inverse of two numbers.
     >>> multiplicative_inverse(7, 40)
     23
     """
-    # PUT YOUR CODE HERE
-    pass
 
+    def extended_gcd(a: int, b: int) -> tp.Tuple[int, int, int]:
+        if a == 0:
+            return b, 0, 1
+
+        gcd, x1, y1 = extended_gcd(b % a, a)
+        x = y1 - (b // a) * x1
+        y = x1
+        return gcd, x, y
+
+    gcd, x, y = extended_gcd(e, phi)
+
+    if gcd != 1:
+        raise ValueError(f"e={e} and phi={phi} are not coprime")
+
+    # Возвращаем положительный результат по модулю phi
+    return x % phi
+
+
+import typing as tp
+import random
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
     if not (is_prime(p) and is_prime(q)):
@@ -59,18 +75,18 @@ def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[in
         raise ValueError("p and q cannot be equal")
 
     # n = pq
-    # PUT YOUR CODE HERE
+    n = p * q
 
     # phi = (p-1)(q-1)
-    # PUT YOUR CODE HERE
+    phi = (p - 1) * (q - 1)
 
     # Choose an integer e such that e and phi(n) are coprime
-    e = random.randrange(1, phi)
+    e = random.randrange(2, phi)  # начинаем с 2, так как 1 не рекомендуется
 
     # Use Euclid's Algorithm to verify that e and phi(n) are coprime
     g = gcd(e, phi)
     while g != 1:
-        e = random.randrange(1, phi)
+        e = random.randrange(2, phi)
         g = gcd(e, phi)
 
     # Use Extended Euclid's Algorithm to generate the private key
