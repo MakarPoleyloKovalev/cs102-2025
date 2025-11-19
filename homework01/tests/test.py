@@ -1,1 +1,1 @@
-print(ord(p))
+print(ord('p'))
