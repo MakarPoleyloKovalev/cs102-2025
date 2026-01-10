@@ -136,41 +136,39 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
 
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     """Генерация судоку заполненного на N элементов"""
-    grid = [["." for _ in range(9)] for _ in range(9)]
-
-    base_grid = [
-        list("123456789"),
-        list("456789123"),
-        list("789123456"),
-        list("234567891"),
-        list("567891234"),
-        list("891234567"),
-        list("345678912"),
-        list("678912345"),
-        list("912345678"),
+    # Берем готовое решение
+    full_solution = [
+        ['5', '3', '4', '6', '7', '8', '9', '1', '2'],
+        ['6', '7', '2', '1', '9', '5', '3', '4', '8'],
+        ['1', '9', '8', '3', '4', '2', '5', '6', '7'],
+        ['8', '5', '9', '7', '6', '1', '4', '2', '3'],
+        ['4', '2', '6', '8', '5', '3', '7', '9', '1'],
+        ['7', '1', '3', '9', '2', '4', '8', '5', '6'],
+        ['9', '6', '1', '5', '3', '7', '2', '8', '4'],
+        ['2', '8', '7', '4', '1', '9', '6', '3', '5'],
+        ['3', '4', '5', '2', '8', '6', '1', '7', '9']
     ]
 
-    for _ in range(10):
-        if random.random() > 0.5:
-            block = random.randint(0, 2)
-            rows = list(range(block * 3, block * 3 + 3))
-            random.shuffle(rows)
-            for i in range(3):
-                base_grid[rows[0] + i], base_grid[rows[1] + i] = base_grid[rows[1] + i], base_grid[rows[0] + i]
+    # Создаем копию
+    grid = [row[:] for row in full_solution]
 
-    if N >= 81:
-        return base_grid
+    # Ограничиваем N
+    N = max(0, min(N, 81))
 
-    result = [row[:] for row in base_grid]
+    # Если нужно все 81 цифру
+    if N == 81:
+        return grid
+
+    # Убираем лишние цифры
     positions = [(r, c) for r in range(9) for c in range(9)]
     random.shuffle(positions)
 
     cells_to_remove = 81 - N
-    for i in range(min(cells_to_remove, 81)):
+    for i in range(cells_to_remove):
         r, c = positions[i]
-        result[r][c] = "."
+        grid[r][c] = '.'
 
-    return result
+    return grid
 
 
 if __name__ == "__main__":
