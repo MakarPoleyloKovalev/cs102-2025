@@ -2,6 +2,8 @@
 
 import abc
 
+from life import GameOfLife
+
 # Локальный импорт
 try:
     from .life import GameOfLife
