@@ -9,16 +9,16 @@ from ui import UI
 class GUI(UI):
     """Графический интерфейс для игры 'Жизнь'"""
 
-    def __init__(self, life: GameOfLife, cell_size: int = 10, speed: int = 10) -> None:
-        super().__init__(life)
+    def __init__(self, game_life: GameOfLife, cell_size: int = 10, speed: int = 10) -> None:
+        super().__init__(game_life)
         self.cell_size = cell_size
         self.speed = speed
         self.paused = True  # По умолчанию на паузе, чтобы можно было рисовать
         self.drawing = False
 
         # Вычисляем размер окна
-        self.width = life.cols * cell_size
-        self.height = life.rows * cell_size
+        self.width = game_life.cols * cell_size
+        self.height = game_life.rows * cell_size
 
         # Инициализация pygame
         pygame.init()  # pylint: disable=no-member
@@ -144,6 +144,6 @@ class GUI(UI):
 
 if __name__ == "__main__":
     # Пример запуска
-    life = GameOfLife((48, 64), randomize=True, max_generations=1000)
-    ui = GUI(life, cell_size=15, speed=10)
+    game = GameOfLife((48, 64), randomize=True, max_generations=1000)
+    ui = GUI(game, cell_size=15, speed=10)
     ui.run()
