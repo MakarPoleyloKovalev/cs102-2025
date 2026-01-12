@@ -5,6 +5,7 @@ import typing as tp
 
 import pygame
 
+
 Cell = tp.Tuple[int, int]
 Cells = tp.List[int]
 Grid = tp.List[Cells]
