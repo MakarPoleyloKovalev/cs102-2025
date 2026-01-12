@@ -5,7 +5,6 @@ import typing as tp
 
 import pygame
 
-
 Cell = tp.Tuple[int, int]
 Cells = tp.List[int]
 Grid = tp.List[Cells]
@@ -110,6 +109,23 @@ class GameOfLife:
                 pygame.draw.rect(self.screen, color, rect)
 
     def get_neighbours(self, cell: Cell) -> Cells:
+        """
+        Вернуть список соседних клеток для клетки `cell`.
+
+        Соседними считаются клетки по горизонтали, вертикали и диагоналям,
+        то есть, во всех направлениях.
+
+        Parameters
+        ----------
+        cell : Cell
+            Клетка, для которой необходимо получить список соседей. Клетка
+            представлена кортежем, содержащим ее координаты на игровом поле.
+
+        Returns
+        ----------
+        out : Cells
+            Список соседних клеток.
+        """
         row, col = cell
         neighbours = []
 
@@ -120,16 +136,11 @@ class GameOfLife:
                 new_row = row + i
                 new_col = col + j
 
-                # ИСПРАВЛЕНИЕ: используем len() вместо self.cell_height/self.cell_width
+                # Проверка границ - используем фактические размеры сетки
                 if 0 <= new_row < len(self.grid) and 0 <= new_col < len(self.grid[0]):
                     neighbours.append(self.grid[new_row][new_col])
 
-        Returns
-        ----------
-        out : Cells
-            Список соседних клеток, в котором каждая позиция – 0 или 1.
-        """
-        pass
+        return neighbours
 
     def get_next_generation(self) -> Grid:
         """
