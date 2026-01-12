@@ -1,6 +1,3 @@
-import json
-import os
-import random
 import unittest
 
 import life

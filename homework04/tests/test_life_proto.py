@@ -1,10 +1,8 @@
-import json
-import os
-import random
 import unittest
 from unittest.mock import MagicMock
 
 import life_proto
+
 
 life_proto.pygame.display = MagicMock()
 
