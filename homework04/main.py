@@ -2,6 +2,7 @@
 
 import pathlib
 import time
+
 from life import GameOfLife
 from life_console import Console
 from life_gui import GUI
