@@ -1,7 +1,6 @@
 """Консольный интерфейс для игры 'Жизнь'"""
 
 import curses
-
 from life import GameOfLife
 from ui import UI
 
@@ -9,8 +8,8 @@ from ui import UI
 class Console(UI):
     """Консольный интерфейс для игры 'Жизнь'"""
 
-    def __init__(self, life: GameOfLife) -> None:
-        super().__init__(life)
+    def __init__(self, game_life: GameOfLife) -> None:
+        super().__init__(game_life)
 
     def draw_borders(self, screen) -> None:
         """Отобразить рамку"""

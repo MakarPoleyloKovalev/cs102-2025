@@ -30,63 +30,72 @@ class TestGameOfLife(unittest.TestCase):
                 if cell == 1:
                     has_live_cell = True
                     break
-        # С вероятностью (1/2)^(100*100/400) ~ 0 это почти всегда True
         self.assertTrue(has_live_cell)
 
     def test_get_neighbours(self):
-        self.game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
-        neighbours = self.game.get_neighbours((1, 1))
+        game = life_proto.GameOfLife(30, 30, 10)
+        game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+        neighbours = game.get_neighbours((1, 1))
         self.assertEqual(sum(neighbours), 8)
 
     def test_get_neighbours_for_upper_left_corner(self):
-        self.game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
-        neighbours = self.game.get_neighbours((0, 0))
+        game = life_proto.GameOfLife(3, 3, 10)
+        game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+        neighbours = game.get_neighbours((0, 0))
         self.assertEqual(sum(neighbours), 3)
 
     def test_get_neighbours_for_upper_right_corner(self):
-        self.game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
-        neighbours = self.game.get_neighbours((0, 2))
+        game = life_proto.GameOfLife(3, 3, 10)
+        game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+        neighbours = game.get_neighbours((0, 2))
         self.assertEqual(sum(neighbours), 3)
 
     def test_get_neighbours_for_lower_left_corner(self):
-        self.game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
-        neighbours = self.game.get_neighbours((2, 0))
+        game = life_proto.GameOfLife(3, 3, 10)
+        game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+        neighbours = game.get_neighbours((2, 0))
         self.assertEqual(sum(neighbours), 3)
 
     def test_get_neighbours_for_lower_right_corner(self):
-        self.game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
-        neighbours = self.game.get_neighbours((2, 2))
+        game = life_proto.GameOfLife(3, 3, 10)
+        game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+        neighbours = game.get_neighbours((2, 2))
         self.assertEqual(sum(neighbours), 3)
 
     def test_get_neighbours_for_upper_side(self):
-        self.game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
-        neighbours = self.game.get_neighbours((0, 1))
+        game = life_proto.GameOfLife(3, 3, 10)
+        game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+        neighbours = game.get_neighbours((0, 1))
         self.assertEqual(sum(neighbours), 5)
 
     def test_get_neighbours_for_bottom_side(self):
-        self.game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
-        neighbours = self.game.get_neighbours((2, 1))
+        game = life_proto.GameOfLife(3, 3, 10)
+        game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+        neighbours = game.get_neighbours((2, 1))
         self.assertEqual(sum(neighbours), 5)
 
     def test_get_neighbours_for_left_side(self):
-        self.game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
-        neighbours = self.game.get_neighbours((1, 0))
+        game = life_proto.GameOfLife(3, 3, 10)
+        game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+        neighbours = game.get_neighbours((1, 0))
         self.assertEqual(sum(neighbours), 5)
 
     def test_get_neighbours_for_right_side(self):
-        self.game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
-        neighbours = self.game.get_neighbours((1, 2))
+        game = life_proto.GameOfLife(3, 3, 10)
+        game.grid = [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+        neighbours = game.get_neighbours((1, 2))
         self.assertEqual(sum(neighbours), 5)
 
     def test_can_update(self):
-        self.game.grid = [
+        game = life_proto.GameOfLife(50, 50, 10)
+        game.grid = [
             [0, 0, 0, 0, 0],
             [0, 0, 1, 0, 0],
             [0, 0, 1, 0, 0],
             [0, 0, 1, 0, 0],
             [0, 0, 0, 0, 0],
         ]
-        self.game.grid = self.game.get_next_generation()
+        game.grid = game.get_next_generation()
         expected = [
             [0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0],
@@ -94,4 +103,4 @@ class TestGameOfLife(unittest.TestCase):
             [0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0],
         ]
-        self.assertEqual(self.game.grid, expected)
+        self.assertEqual(game.grid, expected)

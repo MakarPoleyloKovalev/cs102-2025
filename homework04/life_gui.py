@@ -1,7 +1,6 @@
 """Графический интерфейс для игры 'Жизнь'"""
 
 import pygame
-
 from life import GameOfLife
 from ui import UI
 

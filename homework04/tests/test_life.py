@@ -32,95 +32,105 @@ class TestGameOfLife(unittest.TestCase):
         self.assertNotEqual(grid_random_true, grid_random_false)
 
     def test_get_neighbours(self):
-        self.life.curr_generation = [
+        game = life.GameOfLife((3, 3), randomize=False)
+        game.curr_generation = [
             [1, 1, 1],
             [1, 1, 1],
             [1, 1, 1],
         ]
-        neighbours = self.life.get_neighbours((1, 1))
+        neighbours = game.get_neighbours((1, 1))
         self.assertEqual(sum(neighbours), 8)
 
     def test_get_neighbours_for_upper_left_corner(self):
-        self.life.curr_generation = [
+        game = life.GameOfLife((3, 3), randomize=False)
+        game.curr_generation = [
             [1, 1, 1],
             [1, 1, 1],
             [1, 1, 1],
         ]
-        neighbours = self.life.get_neighbours((0, 0))
+        neighbours = game.get_neighbours((0, 0))
         self.assertEqual(sum(neighbours), 3)
 
     def test_get_neighbours_for_upper_right_corner(self):
-        self.life.curr_generation = [
+        game = life.GameOfLife((3, 3), randomize=False)
+        game.curr_generation = [
             [1, 1, 1],
             [1, 1, 1],
             [1, 1, 1],
         ]
-        neighbours = self.life.get_neighbours((0, 2))
+        neighbours = game.get_neighbours((0, 2))
         self.assertEqual(sum(neighbours), 3)
 
     def test_get_neighbours_for_lower_left_corner(self):
-        self.life.curr_generation = [
+        game = life.GameOfLife((3, 3), randomize=False)
+        game.curr_generation = [
             [1, 1, 1],
             [1, 1, 1],
             [1, 1, 1],
         ]
-        neighbours = self.life.get_neighbours((2, 0))
+        neighbours = game.get_neighbours((2, 0))
         self.assertEqual(sum(neighbours), 3)
 
     def test_get_neighbours_for_lower_right_corner(self):
-        self.life.curr_generation = [
+        game = life.GameOfLife((3, 3), randomize=False)
+        game.curr_generation = [
             [1, 1, 1],
             [1, 1, 1],
             [1, 1, 1],
         ]
-        neighbours = self.life.get_neighbours((2, 2))
+        neighbours = game.get_neighbours((2, 2))
         self.assertEqual(sum(neighbours), 3)
 
     def test_get_neighbours_for_upper_side(self):
-        self.life.curr_generation = [
+        game = life.GameOfLife((3, 3), randomize=False)
+        game.curr_generation = [
             [1, 1, 1],
             [1, 1, 1],
             [1, 1, 1],
         ]
-        neighbours = self.life.get_neighbours((0, 1))
+        neighbours = game.get_neighbours((0, 1))
         self.assertEqual(sum(neighbours), 5)
 
     def test_get_neighbours_for_bottom_side(self):
-        self.life.curr_generation = [
+        game = life.GameOfLife((3, 3), randomize=False)
+        game.curr_generation = [
             [1, 1, 1],
             [1, 1, 1],
             [1, 1, 1],
         ]
-        neighbours = self.life.get_neighbours((2, 1))
+        neighbours = game.get_neighbours((2, 1))
         self.assertEqual(sum(neighbours), 5)
 
     def test_get_neighbours_for_left_side(self):
-        self.life.curr_generation = [
+        game = life.GameOfLife((3, 3), randomize=False)
+        game.curr_generation = [
             [1, 1, 1],
             [1, 1, 1],
             [1, 1, 1],
         ]
-        neighbours = self.life.get_neighbours((1, 0))
+        neighbours = game.get_neighbours((1, 0))
         self.assertEqual(sum(neighbours), 5)
 
     def test_get_neighbours_for_right_side(self):
-        self.life.curr_generation = [
+        game = life.GameOfLife((3, 3), randomize=False)
+        game.curr_generation = [
             [1, 1, 1],
             [1, 1, 1],
             [1, 1, 1],
         ]
-        neighbours = self.life.get_neighbours((1, 2))
+        neighbours = game.get_neighbours((1, 2))
         self.assertEqual(sum(neighbours), 5)
 
     def test_can_update(self):
-        self.life.curr_generation = [
+        game = life.GameOfLife((5, 5), randomize=False)
+        game.curr_generation = [
             [0, 0, 0, 0, 0],
             [0, 0, 1, 0, 0],
             [0, 0, 1, 0, 0],
             [0, 0, 1, 0, 0],
             [0, 0, 0, 0, 0],
         ]
-        self.life.step()
+        game.step()
         expected = [
             [0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0],
@@ -128,51 +138,53 @@ class TestGameOfLife(unittest.TestCase):
             [0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0],
         ]
-        self.assertEqual(self.life.curr_generation, expected)
+        self.assertEqual(game.curr_generation, expected)
 
     def test_is_changing(self):
-        self.life.curr_generation = [
+        game = life.GameOfLife((5, 5), randomize=False)
+        game.curr_generation = [
             [0, 0, 0, 0, 0],
             [0, 0, 1, 0, 0],
             [0, 0, 1, 0, 0],
             [0, 0, 1, 0, 0],
             [0, 0, 0, 0, 0],
         ]
-        self.life.step()
-        self.assertTrue(self.life.is_changing)
+        game.step()
+        self.assertTrue(game.is_changing)
 
     def test_is_not_changing(self):
-        self.life.curr_generation = [
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
-            [0, 1, 1, 1, 0],
-            [0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0],
+        """Тестирует, что стабильная фигура не изменяется"""
+        game = life.GameOfLife((4, 4), randomize=False)
+        # Квадрат 2x2 - стабильная фигура
+        stable_grid = [
+            [0, 0, 0, 0],
+            [0, 1, 1, 0],
+            [0, 1, 1, 0],
+            [0, 0, 0, 0],
         ]
-        self.life.step()
-        self.assertFalse(self.life.is_changing)
+        game.curr_generation = [row[:] for row in stable_grid]
+        game.step()
+        # Стабильная фигура не должна измениться
+        self.assertEqual(game.curr_generation, stable_grid)
+        # После шага is_changing должно быть False
+        self.assertFalse(game.is_changing)
 
     def test_is_max_generations_exceed(self):
         max_generations = 10
-        self.life = life.GameOfLife((3, 3), max_generations=max_generations)
+        game = life.GameOfLife((3, 3), max_generations=max_generations)
         for _ in range(max_generations):
-            self.life.step()
-        self.assertTrue(self.life.is_max_generations_exceeded)
+            game.step()
+        self.assertTrue(game.is_max_generations_exceeded)
 
     def test_prev_generation_is_correct(self):
-        self.life.curr_generation = [
+        game = life.GameOfLife((5, 5), randomize=False)
+        initial_grid = [
             [0, 0, 0, 0, 0],
             [0, 0, 1, 0, 0],
             [0, 0, 1, 0, 0],
             [0, 0, 1, 0, 0],
             [0, 0, 0, 0, 0],
         ]
-        self.life.step()
-        expected = [
-            [0, 0, 0, 0, 0],
-            [0, 0, 1, 0, 0],
-            [0, 0, 1, 0, 0],
-            [0, 0, 1, 0, 0],
-            [0, 0, 0, 0, 0],
-        ]
-        self.assertEqual(self.life.prev_generation, expected)
+        game.curr_generation = initial_grid
+        game.step()
+        self.assertEqual(game.prev_generation, initial_grid)

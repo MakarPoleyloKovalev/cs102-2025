@@ -93,6 +93,12 @@ class GameOfLife:
 
         return neighbours
 
+    def set_grid(self, grid: Grid) -> None:
+        """Установить новую сетку и обновить размеры"""
+        self.curr_generation = grid
+        self.rows = len(grid)
+        self.cols = len(grid[0]) if self.rows > 0 else 0
+
     def get_next_generation(self) -> Grid:
         """
         Получить следующее поколение клеток.
