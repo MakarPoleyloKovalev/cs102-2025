@@ -1,21 +1,17 @@
 """Абстрактный базовый класс для пользовательских интерфейсов игры 'Жизнь'"""
 
 import abc
+import typing as tp
 
-from life import GameOfLife
 
-
-# Локальный импорт
-try:
-    from .life import GameOfLife
-except ImportError:
+if tp.TYPE_CHECKING:
     from life import GameOfLife
 
 
 class UI(abc.ABC):
     """Абстрактный базовый класс для пользовательских интерфейсов игры 'Жизнь'"""
 
-    def __init__(self, life: GameOfLife) -> None:
+    def __init__(self, life: "GameOfLife") -> None:
         self.life = life
 
     @abc.abstractmethod
